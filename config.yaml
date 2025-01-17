@@ -1,0 +1,11 @@
+experiments:
+  - dataset: "cifar10"
+    num_rounds: 100
+    num_clients: 10
+    data_split: "iid"
+    participation: 1.0
+    max_parallel_executions: 5
+    skewness_alpha: 0.1
+    seed: 1
+    model: "linear"
+    encoder: "SigLIP"
