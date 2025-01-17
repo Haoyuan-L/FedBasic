@@ -1,11 +1,13 @@
 experiments:
   - dataset: "cifar10"
     num_rounds: 100
+    local_epochs: 5
     num_clients: 10
     data_split: "iid"
     participation: 1.0
     max_parallel_executions: 5
     skewness_alpha: 0.1
-    seed: 1
+    seed: 0
     model: "linear"
     encoder: "SigLIP"
+    fl_method: "fedavg"
