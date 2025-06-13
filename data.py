@@ -18,12 +18,8 @@ from scipy.stats import mode
 def get_transforms(dataset_name, augmentation=True):
     """Returns the appropriate transformations based on the dataset name."""
     
-    MEAN = {'mnist': (0.1307,), 'fmnist': (0.5,), 'emnist': (0.5,), 'svhn': [0.4376821, 0.4437697, 0.47280442], 
-            'cifar10': [0.485, 0.456, 0.406], 'cifar100': [0.507, 0.487, 0.441], 'pathmnist': (0.5,), 
-            'octmnist': (0.5,), 'organamnist': (0.5,), 'dermamnist': (0.5,), 'bloodmnist': (0.5,), 'tiny-imagenet': [0.480, 0.448, 0.398]}
-    STD = {'mnist': (0.3081,), 'fmnist': (0.5,), 'emnist': (0.5,), 'svhn': [0.19803012, 0.20101562, 0.19703614], 
-           'cifar10': [0.229, 0.224, 0.225], 'cifar100': [0.267, 0.256, 0.276], 'pathmnist': (0.5,),
-           'octmnist': (0.5,), 'organamnist': (0.5,), 'dermamnist': (0.5,), 'bloodmnist': (0.5,), 'tiny-imagenet': [0.277, 0.269, 0.282]}
+    MEAN = {'cifar10': [0.485, 0.456, 0.406], 'cifar100': [0.507, 0.487, 0.441], 'tiny-imagenet': [0.480, 0.448, 0.398]}
+    STD = {'cifar10': [0.229, 0.224, 0.225], 'cifar100': [0.267, 0.256, 0.276], 'tiny-imagenet': [0.277, 0.269, 0.282]}
 
     if augmentation:
         if dataset_name.lower() == "tiny-imagenet":
@@ -136,30 +132,6 @@ def get_data(dataset_name="cifar10", id=0, num_clients=10, return_eval_ds=False,
             test_dataset = CIFAR10(root=data_dir, train=False, download=True, transform=get_transforms(dataset_name, augmentation=False))
             test_dataset_for_embeddings = CIFAR10(root=data_dir, train=False, download=True, transform=preprocess)
         num_classes = 10
-
-    elif dataset_name.lower() == "svhn":
-        with contextlib.redirect_stdout(None):
-            train_dataset = SVHN(root=data_dir, split='train', download=True, transform=get_transforms(dataset_name, augmentation=True))
-            train_dataset_for_embeddings = SVHN(root=data_dir, split='train', download=True, transform=preprocess)
-            test_dataset = SVHN(root=data_dir, split='test', download=True, transform=get_transforms(dataset_name, augmentation=False))
-            test_dataset_for_embeddings = SVHN(root=data_dir, split='test', download=True, transform=preprocess)
-        num_classes = 10
-
-    elif dataset_name.lower() == "pathmnist":
-        with contextlib.redirect_stdout(None):
-            train_dataset = PathMNIST(root=data_dir, split="train", download=True, transform=get_transforms(dataset_name, augmentation=True))
-            train_dataset_for_embeddings = PathMNIST(root=data_dir, split="train", download=True, transform=preprocess)
-            test_dataset = PathMNIST(root=data_dir, split="test", download=True, transform=get_transforms(dataset_name, augmentation=False))
-            test_dataset_for_embeddings = PathMNIST(root=data_dir, split="test", download=True, transform=preprocess)
-        num_classes = 9
-
-    elif dataset_name.lower() == "dermamnist":
-        with contextlib.redirect_stdout(None):
-            train_dataset = DermaMNIST(root=data_dir, split="train", download=True, transform=get_transforms(dataset_name, augmentation=True))
-            train_dataset_for_embeddings = DermaMNIST(root=data_dir, split="train", download=True, transform=preprocess)
-            test_dataset = DermaMNIST(root=data_dir, split="test", download=True, transform=get_transforms(dataset_name, augmentation=False))
-            test_dataset_for_embeddings = DermaMNIST(root=data_dir, split="test", download=True, transform=preprocess)
-        num_classes = 7
 
     elif dataset_name.lower() == "cifar100":
         with contextlib.redirect_stdout(None):
